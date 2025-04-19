@@ -1,13 +1,5 @@
 import pet
 import time
-"""
-- This is a simple pet simulator program that allows users to create a pet and interact with it.
-- The user can feed the pet, play with it, teach it tricks, and check its status.
-- The program uses a class to represent the pet and its attributes, and it provides a simple text-based interface for user interaction.
-- The program is designed to be easy to use and understand, making it suitable for beginners in programming.
-- The program is written in Python and uses basic programming concepts such as classes, methods, and user input.
-- The program is designed to be run in a terminal or command prompt, and it provides clear instructions for the user to follow.
-"""
 
 def loading(action, petName=""):
     """Simulate loading time for pet actions."""
@@ -17,9 +9,17 @@ def loading(action, petName=""):
         print(f"{petName} is {action}ing", end="")
         for i in range(3):
             print(".", end="")
-            # time.sleep(1)
         time.sleep(1) 
         print("")
+
+def pet_reaction(action):
+    """Displays a reaction based on the action performed."""
+    reactions = {
+        "feed": ["That was tasty!", "Yummy! I feel full!", "Thanks for the meal!"],
+        "play": ["That was fun!", "I love playing with you!", "Let's do it again!"],
+        "sleep": ["I feel rested!", "Thanks for the nap!", "I feel so refreshed!"]
+    }
+    print(reactions.get(action, "Thanks!"))
 
 # Main program starts here
 print("==============================================")
@@ -46,12 +46,13 @@ while True:
     print("6. 📃 Display all tricks your pet knows")
     print("7. Exit")
     print("==============================================")
+    
     try:
         userChoice = int(input("Please choose an option (1-7):"))
         if userChoice < 1 or userChoice > 7:
             raise ValueError
     except ValueError:
-        print("Invalid input. Please enter a number between 1 and 5.")
+        print("Invalid input. Please enter a number between 1 and 7.")
         print("==============================================")
         time.sleep(2)  # Adding a delay for better readability
 
@@ -60,11 +61,13 @@ while True:
         loading("feed", userPet.name)
         # Simulate feeding the pet
         userPet.eat()
+        pet_reaction("feed")
         userPet.get_status()
     elif userChoice == 2:
         loading("play", userPet.name)
         # Simulate playing with the pet
         userPet.play()
+        pet_reaction("play")
         userPet.get_status()
     elif userChoice == 3:
         trick = input("🎃 Please enter the trick you want to teach your pet: ")
@@ -93,6 +96,7 @@ while True:
     elif userChoice == 5:
         loading("sleep", userPet.name)
         userPet.sleep()
+        pet_reaction("sleep")
         time.sleep(2)
         userPet.get_status()
     elif userChoice == 6:
@@ -104,6 +108,13 @@ while True:
     else:
         print("Try again.")
         print("==============================================")
+
+# Simulate closing the simulator
+print("Closing the Pet simulator", end="")
+for i in range(3):
+    print(".", end="")
+    time.sleep(1)
+
 # Simulate closing the simulator
 print("Closing the Pet simulator", end="")
 for i in range(3):
